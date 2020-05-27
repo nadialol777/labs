@@ -1,0 +1,31 @@
+'''Кукушкина Н., 4913M'''
+
+import matplotlib.pyplot as plt
+import random
+import numpy as np
+
+n = 10
+k = 1000
+Pr = [i for i in np.arange(0, 1 / n, 0.005)]
+T = [0]
+
+for pr in Pr:
+    Buff = []
+    for m in range(k):
+        frame = []  # фрейм c n слотами
+        messages = 0  # количество пришедших сообщенией
+        buff = 0  # количество сообщений в буфере
+        for j in range(n):
+            slot = [1 if random.random() < pr else 0 for i in range(n)]
+            frame.append(slot)
+            messages += sum(slot)
+        buff = messages - n + buff
+        if buff <= 0:
+            buff = 0
+        Buff.append(buff)
+    if pr != 0:
+        T.append(sum(Buff) / pr)
+
+print(T)
+plt.plot(Pr, T)
+plt.show()
